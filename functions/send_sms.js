@@ -2,10 +2,10 @@ const Plivo = require('plivo');
 
 
 /**
- * Sends SMS
- * @param {string} from Phone number sending the message
- * @param {any} to Phone numbers
- * @param {string} message The text message
+ * Sends SMS via Plivo.
+ * @param {string} from Plivo number sending the message.
+ * @param {any} to Phone number or array of phone numbers.
+ * @param {string} message The message text.
  * @returns {object}
  */
 module.exports = async (from = '', to, message) => {

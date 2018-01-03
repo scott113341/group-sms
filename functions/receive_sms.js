@@ -6,8 +6,8 @@ const { PEOPLE } = require('../lib/people.js');
 
 
 /**
- * Sends SMS
- * @returns {any}
+ * Handles incoming SMS from Plivo.
+ * @returns {boolean}
  */
 module.exports = async (context) => {
   const { params } = context;

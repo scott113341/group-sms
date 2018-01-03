@@ -2,7 +2,7 @@ const Plivo = require('plivo');
 
 
 /**
- * Starts conference call
+ * Returns Plivo XML to start/join a conference call.
  * @returns {any}
  */
 module.exports = (context, callback) => {

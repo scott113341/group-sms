@@ -5,7 +5,7 @@ const { GROUPS } = require('../lib/people');
 
 
 /**
- * Command: /help
+ * Command: /members
  * @param {string} from
  * @param {string} text
  * @param {object} sender
