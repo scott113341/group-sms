@@ -1,3 +1,5 @@
+const squish = require('dedent-js');
+const lib = require('lib');
 const Plivo = require('plivo');
 
 const { extractIds, peopleFromMixedIds } = require('../lib/people.js');
@@ -35,5 +37,12 @@ module.exports = async (from, text, sender, args, context) => {
     });
 
     return Promise.all(calls);
+  } else {
+    return lib[`${context.service.identifier}.send_sms`]({
+      to: sender.number,
+      message: squish`
+        Whoops, you need to specify some people to call!
+      `,
+    });
   }
 };
