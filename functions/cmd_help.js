@@ -14,16 +14,19 @@ module.exports = async (from, text, sender, args, context) => {
   await lib[`${context.service.identifier}.send_sms`]({
     to: sender.number,
     message: squish`
-      These are the commands you can use:
+      These are the things you can do:
       
       @someperson @somegroup yo where u at?
-      Sends a message to all people and members of groups listed
+      Sends a message to all people/groups listed
       
       /members @somegroup
       Lists all members in the specified group
       
       /groups
       Lists all groups
+      
+      /call @someperson @somegroup
+      Starts a conference call with people/groups listed
       
       /help
       Returns this message
