@@ -1,6 +1,6 @@
 const { routeCommand } = require('../lib/commands');
 const { routeMessage } = require('../lib/messages');
-const { loadPeople, PEOPLE } = require('../lib/people.js');
+const { loadPeople } = require('../lib/people.js');
 
 
 /**
@@ -8,7 +8,7 @@ const { loadPeople, PEOPLE } = require('../lib/people.js');
  * @returns {boolean}
  */
 module.exports = async (context) => {
-  await loadPeople();
+  const { PEOPLE } = await loadPeople();
 
   const { params } = context;
   const message = {
