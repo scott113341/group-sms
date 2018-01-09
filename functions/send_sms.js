@@ -13,12 +13,19 @@ module.exports = async (from = '', to, message) => {
   to = Array.isArray(to) ? to : [ to ];
 
   const promises = to.map(async number => {
-    await client.messages.create({
+    const args = {
       body: message,
       to: number,
       from: from,
-    });
-    return true;
+    };
+
+    if (process.env.SEND_SMS === 'true') {
+      await client.messages.create(args);
+      return true;
+    } else {
+      console.log(args);
+      return 'test';
+    }
   });
 
   return Promise.all(promises);
