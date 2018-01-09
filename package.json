@@ -8,7 +8,7 @@
     "chatcommand-parser": "^0.1.3",
     "dedent-js": "^1.0.1",
     "lib": "^3.0.1",
-    "plivo": "^4.0.0-beta.1"
+    "twilio": "3.11.0"
   },
   "private": true,
   "stdlib": {

@@ -6,14 +6,14 @@ const { PEOPLE } = require('../lib/people.js');
 
 
 /**
- * Handles incoming SMS from Plivo.
+ * Handles incoming SMS from Twilio.
  * @returns {boolean}
  */
 module.exports = async (context) => {
   const { params } = context;
   const message = {
     from: params.From,
-    text: params.Text,
+    text: params.Body,
     sender: PEOPLE.findBy('number', params.From),
   };
   console.log(message);

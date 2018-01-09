@@ -1,17 +1,25 @@
-const Plivo = require('plivo');
+const client = require('../lib/twilio-client.js');
 
 
 /**
- * Sends SMS via Plivo.
- * @param {string} from Plivo number sending the message.
+ * Sends SMS via Twilio.
+ * @param {string} from Twilio number sending the message.
  * @param {any} to Phone number or array of phone numbers.
  * @param {string} message The message text.
- * @returns {object}
+ * @returns {array}
  */
 module.exports = async (from = '', to, message) => {
-  from = from || process.env.PLIVO_NUMBER;
-  to = Array.isArray(to) ? to.join('<') : to;
+  from = from || process.env.TWILIO_NUMBER;
+  to = Array.isArray(to) ? to : [ to ];
 
-  const client = new Plivo.Client();
-  return client.messages.create(from, to, message);
+  const promises = to.map(async number => {
+    await client.messages.create({
+      body: message,
+      to: number,
+      from: from,
+    });
+    return true;
+  });
+
+  return Promise.all(promises);
 };
