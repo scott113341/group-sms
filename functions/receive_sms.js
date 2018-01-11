@@ -8,18 +8,18 @@ const { loadPeople } = require('../lib/people.js');
  * @returns {boolean}
  */
 module.exports = async (context) => {
-  const { PEOPLE } = await loadPeople();
+  const peopleGroups = await loadPeople();
 
   const { params } = context;
   const message = {
     from: params.From,
     text: params.Body.trim(),
-    sender: PEOPLE.findBy('number', params.From),
+    sender: peopleGroups.PEOPLE.findBy('number', params.From),
   };
   console.log(message);
 
-  if (await routeCommand(message, context)) return true;
+  if (await routeCommand(message, peopleGroups, context)) return true;
   else if (message.text[0] === '/') return false;
-  else if (await routeMessage(message, context)) return true;
+  else if (await routeMessage(message, peopleGroups, context)) return true;
   else return false;
 };
