@@ -24,12 +24,15 @@ module.exports = async (req, res) => {
   console.log(message);
 
   if (await routeCommand(message, peopleGroups)) {
-    res.end('command');
+    console.log('routed command');
   } else if (message.text[0] === '/') {
-    res.end('bad command');
+    console.log('invalid command');
   } else if (await routeMessage(message, peopleGroups)) {
-    res.end('message');
+    console.log('routed message');
   } else {
-    res.end('dunno');
+    console.log('errored');
   }
+
+  res.setHeader('Content-Type', 'text/html');
+  res.end('<Response></Response>');
 };
