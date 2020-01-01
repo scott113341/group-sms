@@ -12,3 +12,16 @@ test('/join @drivers', t => {
   });
   t.end();
 });
+
+test('/invite 1234567890 @scott Scott Hardy', t => {
+  const cmd = parser.parse(`/invite 1234567890 @scott Scott Hardy`);
+  t.deepEqual(cmd, {
+    command: 'invite',
+    args: {
+      number: '1234567890',
+      id: '@scott',
+      name: 'Scott Hardy',
+    },
+  });
+  t.end();
+});

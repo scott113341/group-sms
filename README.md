@@ -29,6 +29,9 @@ All of the specified `@things` (people, and people in those groups) will have th
 #### `/info [@thing]`
 If you don't give any arguments (aka, you send `/info`), this displays information about you. If you specify a `@thing`, it'll return information about that group or person. Doing a quick `/info @all` is a nice way to get everyone's name + phone number stored offline in your phone as a text message.
 
+#### `/invite 1234567890 @scott Scott Hardy`
+Invites a user to the group.
+
 #### `/groups`
 Lists all groups
 
@@ -40,3 +43,10 @@ Leave the specified `@group`.
 
 #### `/help`
 Displays a message about how to use Group SMS.
+
+## Adding a command
+- In `lib/parser.js`, use `#addCommand` to register the command with the parser
+- In `lib/commands/`, create a new file with the handler to be invoked
+- In `lib/commands.js`, add a key-value pair to map the command name with its newly-created handler
+- In `lib/commands/help.js`, document the command
+- In `README.md`, document the command
