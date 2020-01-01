@@ -10,15 +10,5 @@
     "pg": "7.4.1",
     "twilio": "3.11.0"
   },
-  "private": true,
-  "stdlib": {
-    "build": "faaslang",
-    "name": "scott113341/hut-trip",
-    "timeout": 10000,
-    "publish": false,
-    "personalize": {
-      "keys": [],
-      "user": []
-    }
-  }
+  "private": true
 }
