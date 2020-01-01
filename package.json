@@ -1,9 +1,8 @@
 {
-  "name": "hut-trip",
+  "name": "group-sms",
   "version": "0.0.0",
-  "description": "",
+  "description": "This application provides group SMS messaging. It is useful for group coordination where internet connectivity is unreliable or low-bandwidth. It was developed for coordination of backpacking trips in the mountains of Colorado.",
   "author": "scott113341 <scott.the.hardy@gmail.com>",
-  "main": "functions/__main__.js",
   "engines": {
     "node": "12.x"
   },
