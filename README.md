@@ -41,6 +41,12 @@ Join the specified `@group`.  If it doesn't exist yet, it'll be created!
 #### `/leave @group`
 Leave the specified `@group`.
 
+#### `/add @group @person [@person, ...]`
+Adds the `@person` to the specified `@group`.
+
+#### `/remove @group @person [@person, ...]`
+Removes the `@person` from the specified `@group`.
+
 #### `/help`
 Displays a message about how to use Group SMS.
 
