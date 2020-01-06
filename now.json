@@ -1,7 +1,6 @@
 {
   "version": 2,
   "name": "group-sms",
-  "alias": ["group-sms.now.sh"],
   "env": {
     "DATABASE_URL": "@database-url",
     "TWILIO_ACCOUNT_SID": "@twilio-account-sid",
