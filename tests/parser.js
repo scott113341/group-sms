@@ -25,3 +25,15 @@ test('/invite 1234567890 @scott Scott Hardy', t => {
   });
   t.end();
 });
+
+test('/add @drivers @scott @rico', t => {
+  const cmd = parser.parse(`/add @drivers @scott @rico`);
+  t.deepEqual(cmd, {
+    command: 'add',
+    args: {
+      groupId: '@drivers',
+      people: '@scott @rico',
+    },
+  });
+  t.end();
+});
