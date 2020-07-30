@@ -7,9 +7,6 @@ CREATE TABLE people (
   number text NOT NULL CHECK (number ~ '^\+1\d{10}$'::text) UNIQUE
 );
 
-CREATE UNIQUE INDEX people_pkey ON people(id text_ops);
-CREATE UNIQUE INDEX people_number_key ON people(number text_ops);
-
 create function add_to_all()
 returns trigger as $$
 begin
@@ -31,5 +28,3 @@ CREATE TABLE groups (
   person_id character varying(32) NOT NULL REFERENCES people(id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT groups_group_id_person_id_key UNIQUE (group_id, person_id)
 );
-
-CREATE UNIQUE INDEX groups_group_id_person_id_key ON groups(group_id text_ops, person_id text_ops);
