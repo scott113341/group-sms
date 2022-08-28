@@ -4,7 +4,7 @@
   "description": "This application provides group SMS messaging. It is useful for group coordination where internet connectivity is unreliable or low-bandwidth. It was developed for coordination of backpacking trips in the mountains of Colorado.",
   "author": "scott113341 <scott.the.hardy@gmail.com>",
   "engines": {
-    "node": "12.x"
+    "node": "18.x"
   },
   "scripts": {
     "test": "tape tests/**/*.js"
