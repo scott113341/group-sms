@@ -1,0 +1,16 @@
+name: Setup
+description: Install Node and dependencies
+runs:
+  using: composite
+  steps:
+    - name: Get Node version
+      id: get-node-version
+      shell: bash
+      run: echo "::set-output name=node-version::$(cat .nvmrc)"
+    - name: Set up Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ steps.get-node-version.outputs.node-version }}
+    - name: Install dependencies
+      shell: bash
+      run: yarn install

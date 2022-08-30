@@ -1,25 +1,26 @@
-const querystring = require("querystring");
+const Koa = require("koa");
+const koaBody = require("koa-body");
+const KoaRouter = require("@koa/router");
 
 const { routeCommand } = require("./lib/commands");
 const { routeMessage } = require("./lib/messages");
 const { loadPeople } = require("./lib/people.js");
 
-async function bufferReq(req) {
-  return new Promise((resolve, reject) => {
-    let body = "";
-    req.on("data", (d) => (body += d));
-    req.on("end", () => resolve(querystring.parse(body)));
-  });
-}
+const app = new Koa();
+const router = new KoaRouter();
 
-module.exports = async (req, res) => {
+router.get("/", async (ctx) => {
+  ctx.response.body = "ok";
+});
+
+router.post("/incoming-message", async (ctx) => {
+  const params = ctx.request.body;
+
   const peopleGroups = await loadPeople();
-  const params = await bufferReq(req);
-
   const message = {
-    from: params.From,
-    text: params.Body.trim(),
-    sender: peopleGroups.PEOPLE.findBy("number", params.From),
+    from: params.get("From"),
+    text: params.get("Body").trim(),
+    sender: peopleGroups.PEOPLE.findBy("number", params.get("From")),
   };
   console.log(message);
 
@@ -33,6 +34,24 @@ module.exports = async (req, res) => {
     console.log("errored");
   }
 
-  res.setHeader("Content-Type", "text/html");
-  res.end("<Response></Response>");
-};
+  ctx.response.set("Content-Type", "text/xml");
+  ctx.response.body = "<Response></Response>";
+});
+
+router.get("/conference-call", async (ctx) => {
+  ctx.response.set("Content-Type", "text/xml");
+  ctx.response.body = `
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Response>
+      <Say>Please wait for others to join the call.</Say>
+      <Dial>
+        <Conference>${Date.now()}</Conference>
+      </Dial>
+    </Response>
+  `;
+});
+
+app.use(koaBody()).use(router.routes());
+
+const port = parseInt(process.env.PORT || 3000, 10);
+app.listen(port, () => console.log(`Listening on ${port}`));
