@@ -18,9 +18,9 @@ router.post("/incoming-message", async (ctx) => {
 
   const peopleGroups = await loadPeople();
   const message = {
-    from: params.get("From"),
-    text: params.get("Body").trim(),
-    sender: peopleGroups.PEOPLE.findBy("number", params.get("From")),
+    from: params.From,
+    text: params.Body.trim(),
+    sender: peopleGroups.PEOPLE.findBy("number", params.From),
   };
   console.log(message);
 
@@ -38,7 +38,7 @@ router.post("/incoming-message", async (ctx) => {
   ctx.response.body = "<Response></Response>";
 });
 
-router.get("/conference-call", async (ctx) => {
+router.post("/conference-call", async (ctx) => {
   ctx.response.set("Content-Type", "text/xml");
   ctx.response.body = `
     <?xml version="1.0" encoding="UTF-8"?>
