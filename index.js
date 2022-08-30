@@ -45,7 +45,7 @@ router.get("/conference-call", async (ctx) => {
     <Response>
       <Say>Please wait for others to join the call.</Say>
       <Dial>
-        <Conference>${Date.now()}</Conference>
+        <Conference>group-sms</Conference>
       </Dial>
     </Response>
   `;
