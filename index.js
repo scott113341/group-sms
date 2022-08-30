@@ -48,7 +48,7 @@ router.get("/conference-call", async (ctx) => {
         <Conference>group-sms</Conference>
       </Dial>
     </Response>
-  `;
+  `.trim();
 });
 
 app.use(koaBody()).use(router.routes());
