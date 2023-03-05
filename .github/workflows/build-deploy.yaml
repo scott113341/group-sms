@@ -1,0 +1,39 @@
+name: Build + deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOCKER_REGISTRY: registry.digitalocean.com/scott-do-sfo3-registry
+  DOCKER_NAME: group-sms
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yaml
+
+  build-deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Login to DigitalOcean registry
+        run: doctl registry login --expiry-seconds 3600
+      - name: Build Docker image
+        run: >-
+          docker build
+          -t $DOCKER_REGISTRY/$DOCKER_NAME:latest
+          -t $DOCKER_REGISTRY/$DOCKER_NAME:$(date +%s)
+          --cache-from $DOCKER_REGISTRY/$DOCKER_NAME:latest
+          --build-arg DATABASE_URL=$DATABASE_URL
+          --build-arg BUILDKIT_INLINE_CACHE=1
+          .
+        env:
+          DOCKER_BUILDKIT: "1"
+      - name: Push image to DigitalOcean
+        run: docker push --all-tags $DOCKER_REGISTRY/$DOCKER_NAME
