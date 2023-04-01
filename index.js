@@ -1,5 +1,5 @@
 const Koa = require("koa");
-const koaBody = require("koa-body");
+const { koaBody } = require("koa-body");
 const KoaRouter = require("@koa/router");
 
 const { routeCommand } = require("./lib/commands");
