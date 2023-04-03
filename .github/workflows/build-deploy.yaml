@@ -31,7 +31,7 @@ jobs:
           docker build
           -t $REGISTRY/$REPO:latest
           -t $REGISTRY/$REPO:$(date +%s)
-          --cache-from $DOCKER_REGISTRY/$REPO:latest
+          --cache-from $REGISTRY/$REPO:latest
           --build-arg DATABASE_URL=$DATABASE_URL
           --build-arg BUILDKIT_INLINE_CACHE=1
           .
