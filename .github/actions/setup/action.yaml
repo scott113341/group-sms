@@ -6,7 +6,7 @@ runs:
     - name: Get Node version
       id: get-node-version
       shell: bash
-      run: echo "::set-output name=node-version::$(cat .nvmrc)"
+      run: echo "node-version=$(cat .nvmrc)" >> $GITHUB_OUTPUT
     - name: Set up Node
       uses: actions/setup-node@v3
       with:
