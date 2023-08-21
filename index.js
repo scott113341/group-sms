@@ -54,4 +54,5 @@ router.post("/conference-call", async (ctx) => {
 app.use(koaBody()).use(router.routes());
 
 const port = parseInt(process.env.PORT || 3000, 10);
-app.listen(port, () => console.log(`Listening on ${port}`));
+const server = app.listen(port, () => console.log(`Listening on ${port}`));
+process.on("SIGTERM", () => server.close());
