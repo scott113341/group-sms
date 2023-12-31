@@ -3,14 +3,11 @@ description: Install Node and dependencies
 runs:
   using: composite
   steps:
-    - name: Get Node version
-      id: get-node-version
-      shell: bash
-      run: echo "node-version=$(cat .nvmrc)" >> $GITHUB_OUTPUT
     - name: Set up Node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: ${{ steps.get-node-version.outputs.node-version }}
+        node-version-file: package.json
+        cache: npm
     - name: Install dependencies
       shell: bash
-      run: yarn install
+      run: npm ci
