@@ -24,7 +24,9 @@ router.post("/incoming-message", async (ctx) => {
   };
   console.log(message);
 
-  if (await routeCommand(message, peopleGroups)) {
+  if (message.sender === undefined) {
+    console.log("unknown sender");
+  } else if (await routeCommand(message, peopleGroups)) {
     console.log("routed command");
   } else if (message.text[0] === "/") {
     console.log("invalid command");
