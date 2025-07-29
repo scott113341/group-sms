@@ -13,7 +13,7 @@
     "@koa/router": "12.x",
     "chatcommand-parser": "0.1.x",
     "dedent-js": "1.x",
-    "koa": "2.x",
+    "koa": "3.x",
     "koa-body": "6.x",
     "pg": "8.x",
     "twilio": "4.x"
