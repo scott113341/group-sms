@@ -1,6 +1,6 @@
-const test = require("tape");
+import test from "tape";
 
-const parser = require("../lib/parser");
+import parser from "../lib/parser.js";
 
 test("/join @drivers", (t) => {
   const cmd = parser.parse(`/join @drivers`);

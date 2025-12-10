@@ -1,6 +1,6 @@
-const test = require("tape");
+import test from "tape";
 
-const { extractIds } = require("../lib/people");
+import { extractIds } from "../lib/people.js";
 
 test("extractIds", (t) => {
   t.deepEqual(extractIds("@all Hi"), new Set(["@all"]));
