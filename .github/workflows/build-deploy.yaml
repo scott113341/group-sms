@@ -5,35 +5,16 @@ on:
     branches:
       - main
 
-env:
-  REGISTRY: registry.they.industries
-  REPO: group-sms
-
 jobs:
   test:
     uses: ./.github/workflows/test.yaml
 
   build-deploy:
     needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Login to registry
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.REGISTRY_USER }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
-      - name: Build image
-        env:
-          DOCKER_BUILDKIT: "1"
-        run: >-
-          docker build
-          -t $REGISTRY/$REPO:latest
-          -t $REGISTRY/$REPO:$(date +%s)
-          --cache-from $REGISTRY/$REPO:latest
-          --build-arg DATABASE_URL=$DATABASE_URL
-          --build-arg BUILDKIT_INLINE_CACHE=1
-          .
-      - name: Push image
-        run: docker push --all-tags $REGISTRY/$REPO
+    uses: scott113341/workflows/.github/workflows/build-deploy.yaml@main
+    with:
+      registry: registry.they.industries
+      repository: group-sms
+    secrets:
+      registry-user: ${{ secrets.REGISTRY_USER }}
+      registry-password: ${{ secrets.REGISTRY_PASSWORD }}
