@@ -1,10 +1,10 @@
-const Koa = require("koa");
-const { koaBody } = require("koa-body");
-const KoaRouter = require("@koa/router");
+import Koa from "koa";
+import { koaBody } from "koa-body";
+import KoaRouter from "@koa/router";
 
-const { routeCommand } = require("./lib/commands");
-const { routeMessage } = require("./lib/messages");
-const { loadPeople } = require("./lib/people.js");
+import { routeCommand } from "./lib/commands.js";
+import { routeMessage } from "./lib/messages.js";
+import { loadPeople } from "./lib/people.js";
 
 const app = new Koa();
 const router = new KoaRouter();

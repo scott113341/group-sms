@@ -3,18 +3,16 @@
   "version": "0.0.0",
   "description": "This application provides group SMS messaging. It is useful for group coordination where internet connectivity is unreliable or low-bandwidth. It was developed for coordination of backpacking trips in the mountains of Colorado.",
   "author": "scott113341 <scott.the.hardy@gmail.com>",
-  "engines": {
-    "node": "21.x"
-  },
+  "type": "module",
   "scripts": {
     "test": "tape tests/**/*.js"
   },
   "dependencies": {
-    "@koa/router": "12.x",
+    "@koa/router": "15.x",
     "chatcommand-parser": "0.1.x",
     "dedent-js": "1.x",
-    "koa": "2.x",
-    "koa-body": "6.x",
+    "koa": "3.x",
+    "koa-body": "7.x",
     "pg": "8.x",
     "twilio": "4.x"
   },
