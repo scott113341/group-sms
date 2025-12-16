@@ -14,7 +14,7 @@
     "koa": "3.x",
     "koa-body": "7.x",
     "pg": "8.x",
-    "twilio": "4.x"
+    "twilio": "5.x"
   },
   "devDependencies": {
     "prettier": "3.x",
