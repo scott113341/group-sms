@@ -12,7 +12,7 @@
     "chatcommand-parser": "0.1.x",
     "dedent-js": "1.x",
     "koa": "3.x",
-    "koa-body": "7.x",
+    "koa-body": "8.x",
     "pg": "8.x",
     "twilio": "6.x"
   },
