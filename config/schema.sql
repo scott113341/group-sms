@@ -28,3 +28,13 @@ CREATE TABLE groups (
   person_id character varying(32) NOT NULL REFERENCES people(id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT groups_group_id_person_id_key UNIQUE (group_id, person_id)
 );
+
+
+-----------------
+-- PEOPLE SAVE --
+-----------------
+CREATE TABLE people_save (
+  id character varying(32) NOT NULL CHECK (id::text ~ '^@[a-z0-9_]+$'::text),
+  name text NOT NULL,
+  number text NOT NULL CHECK (number ~ '^\+1\d{10}$'::text)
+);
