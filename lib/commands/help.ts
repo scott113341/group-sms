@@ -1,8 +1,14 @@
 import squish from "dedent-js";
 
-import sendSms from "../send-sms.js";
+import sendSms from "../send-sms.ts";
+import type { CommandContext } from "../commands.ts";
+import type { CommandArgs } from "../parser.ts";
 
-export default async ({ from, text, sender, peopleGroups, args }) => {
+export default async ({
+  sender,
+  peopleGroups,
+  args,
+}: CommandContext<CommandArgs["help"]>) => {
   await sendSms({
     to: sender.number,
     message: squish`

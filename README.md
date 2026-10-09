@@ -63,10 +63,15 @@ Removes the `@person` from the specified `@group`.
 
 Displays a message about how to use Group SMS.
 
+## Development
+
+The app is written in TypeScript and runs directly on Node.js (>= 26) using its built-in
+[type stripping](https://nodejs.org/api/typescript.html#type-stripping), so there's no build step.
+
 ## Adding a command
 
-- In `lib/parser.js`, use `#addCommand` to register the command with the parser
+- In `lib/parser.ts`, use `#addCommand` to register the command with the parser, and add its arguments to the `CommandArgs` type
 - In `lib/commands/`, create a new file with the handler to be invoked
-- In `lib/commands.js`, add a key-value pair to map the command name with its newly-created handler
-- In `lib/commands/help.js`, document the command
+- In `lib/commands.ts`, add a key-value pair to map the command name with its newly-created handler
+- In `lib/commands/help.ts`, document the command
 - In `README.md`, document the command

@@ -1,6 +1,6 @@
 import test from "tape";
 
-import { extractIds } from "../lib/people.js";
+import { extractIds } from "../lib/people.ts";
 
 test("extractIds", (t) => {
   t.deepEqual(extractIds("@all Hi"), new Set(["@all"]));

@@ -1,9 +1,19 @@
 import squish from "dedent-js";
 
-import { peopleFromMixedIds, extractIds } from "./people.js";
-import sendSms from "./send-sms.js";
+import { peopleFromMixedIds, extractIds } from "./people.ts";
+import type { PeopleGroups, Person } from "./people.ts";
+import sendSms from "./send-sms.ts";
 
-export async function routeMessage(message, peopleGroups) {
+export type Message = {
+  from: string;
+  text: string;
+  sender: Person;
+};
+
+export async function routeMessage(
+  message: Message,
+  peopleGroups: PeopleGroups,
+): Promise<boolean> {
   const ids = extractIds(message.text);
   const peopleSet = peopleFromMixedIds(peopleGroups, ...ids);
   peopleSet.delete(message.sender);

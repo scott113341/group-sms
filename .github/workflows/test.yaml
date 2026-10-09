@@ -11,5 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
+      - name: Typecheck
+        run: npm run typecheck
       - name: Test
         run: npm run test

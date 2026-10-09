@@ -1,12 +1,19 @@
+import { DatabaseError } from "pg";
 import squish from "dedent-js";
 
-import { loadPeople } from "../people.js";
-import withPgClient from "../pg-client.js";
-import sendSms from "../send-sms.js";
+import { loadPeople } from "../people.ts";
+import withPgClient from "../pg-client.ts";
+import sendSms from "../send-sms.ts";
+import type { CommandContext } from "../commands.ts";
+import type { CommandArgs } from "../parser.ts";
 
 const BadNumberError = new Error();
 
-export default async ({ from, text, sender, peopleGroups, args }) => {
+export default async ({
+  sender,
+  peopleGroups,
+  args,
+}: CommandContext<CommandArgs["invite"]>) => {
   const { id, name, number } = args;
 
   try {
@@ -18,12 +25,12 @@ export default async ({ from, text, sender, peopleGroups, args }) => {
         insert into people(id, name, number)
         values ($1, $2, $3)
         `,
-        [id, name, formattedNumber]
+        [id, name, formattedNumber],
       );
     });
 
     const peopleGroups = await loadPeople();
-    const newPerson = peopleGroups.PEOPLE.findBy("id", id);
+    const newPerson = peopleGroups.PEOPLE.findBy("id", id)!;
 
     await sendSms({
       to: newPerson.number,
@@ -45,22 +52,24 @@ export default async ({ from, text, sender, peopleGroups, args }) => {
       `,
     });
   } catch (e) {
-    if (e === BadNumberError || e.constraint === "people_number_check") {
+    const constraint = e instanceof DatabaseError ? e.constraint : undefined;
+
+    if (e === BadNumberError || constraint === "people_number_check") {
       return sendSms({
         to: sender.number,
         message: `Oops, the phone number "${number}" isn't valid`,
       });
-    } else if (e.constraint === "people_pkey") {
+    } else if (constraint === "people_pkey") {
       return sendSms({
         to: sender.number,
         message: `Oops, the id "${id}" is already in use`,
       });
-    } else if (e.constraint === "people_id_check") {
+    } else if (constraint === "people_id_check") {
       return sendSms({
         to: sender.number,
         message: `Oops, the id "${id}" isn't valid`,
       });
-    } else if (e.constraint === "people_number_key") {
+    } else if (constraint === "people_number_key") {
       return sendSms({
         to: sender.number,
         message: `Oops, the phone number "${number}" is already registered`,
@@ -74,7 +83,7 @@ export default async ({ from, text, sender, peopleGroups, args }) => {
   }
 };
 
-function formatNumber(number) {
+function formatNumber(number: string): string {
   let fNumber = number;
 
   if (fNumber.match(/^\d{10}$/)) {
