@@ -1,7 +1,15 @@
-import withPgClient from "../pg-client.js";
-import sendSms from "../send-sms.js";
+import { DatabaseError } from "pg";
 
-export default async ({ from, text, sender, peopleGroups, args }) => {
+import withPgClient from "../pg-client.ts";
+import sendSms from "../send-sms.ts";
+import type { CommandContext } from "../commands.ts";
+import type { CommandArgs } from "../parser.ts";
+
+export default async ({
+  sender,
+  peopleGroups,
+  args,
+}: CommandContext<CommandArgs["join"]>) => {
   const { group } = args;
 
   if (group[0] !== "@") {
@@ -20,7 +28,7 @@ export default async ({ from, text, sender, peopleGroups, args }) => {
         left join people on new_group.group_id = people.id
         where people.id is null
         `,
-        [group, sender.id]
+        [group, sender.id],
       );
     });
 
@@ -32,9 +40,11 @@ export default async ({ from, text, sender, peopleGroups, args }) => {
       message: `You've been added to ${group}`,
     });
   } catch (e) {
+    const dbError = e instanceof DatabaseError ? e : undefined;
+
     if (
-      e.code === "22001" ||
-      e.constraint === "groups_group_id_check" ||
+      dbError?.code === "22001" ||
+      dbError?.constraint === "groups_group_id_check" ||
       e === "badgroup"
     ) {
       return sendSms({

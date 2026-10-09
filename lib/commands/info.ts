@@ -1,8 +1,15 @@
 import squish from "dedent-js";
 
-import sendSms from "../send-sms.js";
+import type { Group, Person } from "../people.ts";
+import sendSms from "../send-sms.ts";
+import type { CommandContext } from "../commands.ts";
+import type { CommandArgs } from "../parser.ts";
 
-export default async ({ from, text, sender, peopleGroups, args }) => {
+export default async ({
+  sender,
+  peopleGroups,
+  args,
+}: CommandContext<CommandArgs["info"]>) => {
   const { PEOPLE, GROUPS } = peopleGroups;
 
   const message = (() => {
@@ -38,7 +45,7 @@ export default async ({ from, text, sender, peopleGroups, args }) => {
     `;
   }
 
-  function personInfo(person) {
+  function personInfo(person: Person) {
     return squish`
       Here is ${person.id}'s info:
       
@@ -48,7 +55,7 @@ export default async ({ from, text, sender, peopleGroups, args }) => {
     `;
   }
 
-  function groupInfo(group) {
+  function groupInfo(group: Group) {
     const names = group.people
       .map((p) => `${p.id} - ${p.name} ${p.number}`)
       .join("\n");
@@ -60,7 +67,7 @@ export default async ({ from, text, sender, peopleGroups, args }) => {
     `;
   }
 
-  function oops(id) {
+  function oops(id: string) {
     return `Oops, couldn't find any people or groups named "${id}"`;
   }
 };

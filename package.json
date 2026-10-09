@@ -1,11 +1,15 @@
 {
   "name": "group-sms",
   "version": "0.0.0",
+  "private": true,
   "description": "This application provides group SMS messaging. It is useful for group coordination where internet connectivity is unreliable or low-bandwidth. It was developed for coordination of backpacking trips in the mountains of Colorado.",
   "author": "scott113341 <scott.the.hardy@gmail.com>",
   "type": "module",
   "scripts": {
-    "test": "tape tests/**/*.js"
+    "dev": "node index.ts",
+    "lint": "oxfmt --check",
+    "test": "tape \"tests/**/*.ts\"",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@koa/router": "15.x",
@@ -14,11 +18,19 @@
     "koa": "3.x",
     "koa-body": "8.x",
     "pg": "8.x",
-    "twilio": "6.x"
+    "twilio": "6.x",
+    "zod": "4.x"
   },
   "devDependencies": {
-    "prettier": "3.x",
-    "tape": "5.x"
+    "@types/koa": "3.x",
+    "@types/node": "26.x",
+    "@types/pg": "8.x",
+    "@types/tape": "5.x",
+    "oxfmt": "0.72.x",
+    "tape": "5.x",
+    "typescript": "7.x"
   },
-  "private": true
+  "engines": {
+    "node": ">=26"
+  }
 }

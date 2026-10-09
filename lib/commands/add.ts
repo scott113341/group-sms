@@ -1,13 +1,20 @@
 import squish from "dedent-js";
+import * as z from "zod";
 
-import withPgClient from "../pg-client.js";
-import sendSms from "../send-sms.js";
+import withPgClient, { queryRows } from "../pg-client.ts";
+import sendSms from "../send-sms.ts";
+import type { CommandContext } from "../commands.ts";
+import type { CommandArgs } from "../parser.ts";
 
-export default async ({ from, text, sender, peopleGroups, args }) => {
+export default async ({
+  sender,
+  peopleGroups,
+  args,
+}: CommandContext<CommandArgs["add"]>) => {
   const { PEOPLE } = peopleGroups;
   const { groupId, people } = args;
 
-  const peopleIds = new Set();
+  const peopleIds = new Set<string>();
 
   for (const personId of people.split(/\s+/)) {
     const person = PEOPLE.findBy("id", personId.trim());
@@ -24,8 +31,10 @@ export default async ({ from, text, sender, peopleGroups, args }) => {
     }
   }
 
-  const result = await withPgClient((client) =>
-    client.query(
+  const rows = await withPgClient((client) =>
+    queryRows(
+      client,
+      z.object({ person_id: z.string() }),
       `
         insert into groups(group_id, person_id)
         (select $1, unnest($2::text[]))
@@ -37,10 +46,10 @@ export default async ({ from, text, sender, peopleGroups, args }) => {
   );
 
   const added = new Set();
-  result.rows.forEach((r) => added.add(r.person_id));
+  rows.forEach((r) => added.add(r.person_id));
 
   const notAdded = new Set(peopleIds);
-  result.rows.forEach((r) => notAdded.delete(r.person_id));
+  rows.forEach((r) => notAdded.delete(r.person_id));
 
   const alreadyInGroup =
     notAdded.size >= 1 ? ` (${[...notAdded].join(", ")} already in group)` : "";

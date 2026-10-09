@@ -1,6 +1,6 @@
 import test from "tape";
 
-import parser from "../lib/parser.js";
+import parser from "../lib/parser.ts";
 
 test("/join @drivers", (t) => {
   const cmd = parser.parse(`/join @drivers`);
@@ -35,5 +35,43 @@ test("/add @drivers @scott @rico", (t) => {
       people: "@scott @rico",
     },
   });
+  t.end();
+});
+
+test("/info", (t) => {
+  const cmd = parser.parse(`/info`);
+  t.deepEqual(cmd, {
+    command: "info",
+    args: {
+      thing: null,
+    },
+  });
+  t.end();
+});
+
+test("/info @all", (t) => {
+  const cmd = parser.parse(`/info @all`);
+  t.deepEqual(cmd, {
+    command: "info",
+    args: {
+      thing: "@all",
+    },
+  });
+  t.end();
+});
+
+test("/groups", (t) => {
+  const cmd = parser.parse(`/groups`);
+  t.deepEqual(cmd, {
+    command: "groups",
+    args: {},
+  });
+  t.end();
+});
+
+test("not a command", (t) => {
+  t.equal(parser.parse(`@all hi`), null);
+  t.equal(parser.parse(`/bogus`), null);
+  t.equal(parser.parse(`/join`), null);
   t.end();
 });
