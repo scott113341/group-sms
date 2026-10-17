@@ -11,7 +11,6 @@ const BadNumberError = new Error();
 
 export default async ({
   sender,
-  peopleGroups,
   args,
 }: CommandContext<CommandArgs["invite"]>) => {
   const { id, name, number } = args;
