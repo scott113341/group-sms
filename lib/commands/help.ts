@@ -4,11 +4,7 @@ import sendSms from "../send-sms.ts";
 import type { CommandContext } from "../commands.ts";
 import type { CommandArgs } from "../parser.ts";
 
-export default async ({
-  sender,
-  peopleGroups,
-  args,
-}: CommandContext<CommandArgs["help"]>) => {
+export default async ({ sender }: CommandContext<CommandArgs["help"]>) => {
   await sendSms({
     to: sender.number,
     message: squish`

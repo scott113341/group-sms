@@ -5,7 +5,6 @@ import type { CommandArgs } from "../parser.ts";
 
 export default async ({
   sender,
-  peopleGroups,
   args,
 }: CommandContext<CommandArgs["leave"]>) => {
   const { group } = args;
@@ -29,7 +28,7 @@ export default async ({
       to: sender.number,
       message: `You've been removed from ${group}`,
     });
-  } catch (e) {
+  } catch {
     await sendSms({
       to: sender.number,
       message: `Oops, you're not in the ${group} group`,

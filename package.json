@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "node index.ts",
-    "lint": "oxfmt --check",
+    "lint": "oxfmt --check && oxlint --deny-warnings",
     "test": "tape \"tests/**/*.ts\"",
     "typecheck": "tsc"
   },
@@ -27,6 +27,7 @@
     "@types/pg": "8.x",
     "@types/tape": "5.x",
     "oxfmt": "0.73.x",
+    "oxlint": "1.88.x",
     "tape": "5.x",
     "typescript": "7.x"
   },

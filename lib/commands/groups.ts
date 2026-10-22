@@ -7,7 +7,6 @@ import type { CommandArgs } from "../parser.ts";
 export default async ({
   sender,
   peopleGroups,
-  args,
 }: CommandContext<CommandArgs["groups"]>) => {
   const { GROUPS } = peopleGroups;
 
