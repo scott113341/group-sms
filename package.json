@@ -26,7 +26,7 @@
     "@types/node": "26.x",
     "@types/pg": "8.x",
     "@types/tape": "5.x",
-    "oxfmt": "0.73.x",
+    "oxfmt": "0.74.x",
     "oxlint": "1.88.x",
     "tape": "5.x",
     "typescript": "7.x"
