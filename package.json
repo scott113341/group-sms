@@ -27,7 +27,7 @@
     "@types/pg": "8.x",
     "@types/tape": "5.x",
     "oxfmt": "0.79.x",
-    "oxlint": "^1.93.0",
+    "oxlint": "^1.94.0",
     "tape": "5.x",
     "typescript": "7.x"
   },
